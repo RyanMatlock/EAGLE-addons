@@ -13,6 +13,7 @@ use resistor;
 use capacitor-wima;
 use diode;
 use eagle-ltspice;
+use holes;
 use supply1;
 use supply2;
 use transistor;
