@@ -7,3 +7,12 @@ use -*; # de-select all libraries
 
 use $EAGLEDIR/lbr/magzor/*; # select all magzor libraries
 use $EAGLEDIR/lbr/matlock/*; # select all personal libraries
+
+# other libraries I want
+use resistor;
+use capacitor-wima;
+use diode;
+use eagle-ltspice;
+use supply1;
+use supply2;
+use transistor;
