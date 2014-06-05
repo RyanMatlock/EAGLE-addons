@@ -1,0 +1,9 @@
+# select-libraries.scr
+# selects only certain libraries that the user wants
+# Ryan Matlock
+# 2014-06-05
+
+use -*; # de-select all libraries
+
+use $EAGLEDIR/lbr/magzor/*; # select all magzor libraries
+use $EAGLEDIR/lbr/matlock/*; # select all personal libraries

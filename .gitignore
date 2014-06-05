@@ -1,0 +1,10 @@
+# OS X cruft
+.DS_Store
+
+# Emacs cruft
+*~
+[#]*[#]
+.\#*
+
+# EAGLE libraries (a separate git repository.  TODO: learn about submodules)
+/lbr/

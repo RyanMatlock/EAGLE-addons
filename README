@@ -1,0 +1,8 @@
+This contains a selection of helpful EAGLE files (with the exception of device
+library files, which are kept separately).  To use, I recommend finding
+somewhere other than your EAGLE folder to keep this repository and symlinking
+its folder to the corresponding ones in EAGLE (i.e. for this repository's dru
+folder, run
+    ln -s /path/to/EAGLE-x.x.x/dru/addons /other/path/to/EAGLE-addons/dru
+or something like that where "addons" is a name you choose.  In my case, I
+thought my username worked well enough.).
