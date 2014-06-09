@@ -8,3 +8,5 @@
 
 # EAGLE libraries (a separate git repository.  TODO: learn about submodules)
 /lbr/
+# these are specific to local projects
+/lbr-generated/
