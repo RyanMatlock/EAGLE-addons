@@ -1,0 +1,18 @@
+if(!schematic)
+{
+    dlgMessageBox("This script can only be executed if the schematic editor is open.");
+    exit(1);
+}
+else
+{
+    schematic(s)
+    {
+        output(filesetext(s.name, ".csv"))
+        {
+            printf("schematic name: ");
+            printf(s.name);
+        }
+    }
+    dlgMessageBox("Script ran successfully!");
+    exit(0);
+}
