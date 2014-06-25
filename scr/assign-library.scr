@@ -1,6 +1,6 @@
-# assign-schematic.scr
+# assign-library.scr
 
-# This script sets the key bindings in the schematic editor.  It only needs
+# This script sets the key bindings in the library editor.  It only needs
 # to be run as new features are added or when EAGLE is upgraded.
 
 # Ryan Matlock

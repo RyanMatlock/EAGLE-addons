@@ -10,6 +10,8 @@ Ryan Matlock
 2014-06-25
 """
 
+from datetime import date as _date
+
 # format for lists of commands:
 # <target>_<modifier key(s)>_<description> = [("<key1>", "<command1>"),
 #                                             ...,
@@ -25,17 +27,23 @@ _PREFIXES = ["common",
 _MODIFIERS = ["C", "A", "S", "M"]
 
 common_CA_altgrid = [("F10", "Grid alt in 0.01;"),
-                      ("F11", "Grid alt in 0.025;"),
-                      ("F12", "Grid alt in 0.05;")]
-
+                     ("F11", "Grid alt in 0.025;"),
+                     ("F12", "Grid alt in 0.05;")]
+foo_FU_whatever = [("BS", "backspace 20;")]
 # it looks like you have to initialize var so that the locals() dict doesn't
 # change size during iteration (it's prefixed with an underscore so you skip
 # over it, too
 #var = None
 # edit: never mind, you just have to copy locals() into a dict first
 # this also means you don't need to prefix variables with an underscore now!
-current_locals = dict(locals())
-for var in current_locals:
+local_vars = dict(locals())
+
+common = []
+schematic = []
+board = []
+library = []
+foo = []
+for var in local_vars:
     assign  = "Assign "
     if var[0] != "_":
         # it would be better to use a regex for this so your description can
@@ -45,9 +53,28 @@ for var in current_locals:
         # print(modifiers)
         # print(description)
         for modifier in modifiers:
-            if modifier == modifiers[-1]:
-                assign += modifier
-            else:
-                assign += modifier + "+"
+            assign += modifier + "+"
         for pair in eval(var):
-            print(assign + pair[0] + " " + pair[1])
+            eval(target).append(assign + pair[0] + " " + pair[1])
+
+#print(common)
+schematic += common
+board += common
+library += common
+
+for editor_type in ['schematic', 'board', 'library']:
+    with open("assign-" + editor_type + ".scr", "w") as output:
+        header = """# assign-{editor_type}.scr
+
+# This script sets the key bindings in the {editor_type} editor.  It only needs
+# to be run as new features are added or when EAGLE is upgraded.
+
+# Ryan Matlock
+# {date}
+
+""".format(editor_type=editor_type, date=_date.today())
+
+        output.write(header)
+
+        for command in eval(editor_type):
+            output.write(command + "\n")
