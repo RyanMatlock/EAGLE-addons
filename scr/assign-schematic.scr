@@ -1,0 +1,11 @@
+# assign-schematic.scr
+# Sets the key bindings in the schematic editor.  You'll probably only need to
+# run this once on a new version of EAGLE, but it's still handy to have.
+# Ryan Matlock
+# 2014-06-25
+
+assign F12 'ERC;';
+assign A+F12 'Window fit;';
+assign C+A+F10 'Grid alt in 0.01'; # set alt grid to 0.01"
+assign C+A+F11 'Grid alt in 0.025';
+assign C+A+F12 'Grid alt in 0.05';
