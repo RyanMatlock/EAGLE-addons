@@ -24,19 +24,30 @@ _PREFIXES = ["common",
              "board"]
 _MODIFIERS = ["C", "A", "S", "M"]
 
-common_CA_alt_grid = [("F10", "Grid alt in 0.01;"),
+common_CA_altgrid = [("F10", "Grid alt in 0.01;"),
                       ("F11", "Grid alt in 0.025;"),
                       ("F12", "Grid alt in 0.05;")]
 
-# it looks like you have to initialize _var so that the locals() dict doesn't
+# it looks like you have to initialize var so that the locals() dict doesn't
 # change size during iteration (it's prefixed with an underscore so you skip
 # over it, too
-#_var = None
+#var = None
 # edit: never mind, you just have to copy locals() into a dict first
 # this also means you don't need to prefix variables with an underscore now!
 current_locals = dict(locals())
-for _var in current_locals:
-    if _var[0] != "_":
-        # print(_var[0] + ": " + _var)
-        for _pair in _var:
-            print(_pair)
+for var in current_locals:
+    assign  = "Assign "
+    if var[0] != "_":
+        # it would be better to use a regex for this so your description can
+        # contain underscores, but that's for later
+        target, modifiers, description = var.split("_")
+        # print(target)
+        # print(modifiers)
+        # print(description)
+        for modifier in modifiers:
+            if modifier == modifiers[-1]:
+                assign += modifier
+            else:
+                assign += modifier + "+"
+        for pair in eval(var):
+            print(assign + pair[0] + " " + pair[1])
