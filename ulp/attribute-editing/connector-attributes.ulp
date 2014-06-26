@@ -1,4 +1,4 @@
-char CONNECTOR_REF_DES = 'J'; // connector reference designator
+string CONNECTOR_REF_DES = "J"; // connector reference designator
 
 
 // function borrowed from change-prefix-sch.ulp
@@ -16,6 +16,62 @@ int get_number_index(string name)
     return 0;
 }
 
+int get_prefix_length(string name)
+/* assumes prefix is only alpha (i.e. A-Z, a-z) characters, and once it
+   encounters something other than that (e.g. a digit, a hyphen, or an
+   underscore), it stops incrementing and breaks out of the loop
+*/
+{
+    int length = strlen(name);
+    int prefix_length = 0;
+    for(int i = 0; i < length; i++)
+    {
+        if(isalpha(name[i]))
+        {
+            prefix_length++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    return prefix_length;
+}
+        
+    
+
+/* // also borrowed from change-prefix-sch.ulp */
+/* string get_prefix(string name) */
+/* { */
+/*     int index = get_number_index(name); */
+/*     if(index < 1) */
+/*     { */
+/*         return name; */
+/*     } */
+/*     else */
+/*     { */
+/*         // I modified this section of the code */
+/*         string prefix = ""; */
+/*         for(int i = 0; i < index; i++) */
+/*         { */
+/*             prefix += name[i]; */
+/*         } */
+/*         return prefix; */
+/*     } */
+/* } */
+
+string get_prefix(string name)
+{
+    int prefix_length = get_prefix_length(name);
+    string prefix = "";
+    for(int i = 0; i < prefix_length; i++)
+    {
+        prefix += name[i];
+    }
+    return prefix;
+}
+    
+
 if(schematic)
 {
     schematic(s)
@@ -25,9 +81,9 @@ if(schematic)
         s.parts(p)
         {
             //printf(p.name + "\n"); // works!
-            if(strchr(p.name, CONNECTOR_REF_DES) == 0)
+            if(get_prefix(p.name) == CONNECTOR_REF_DES)
             {
-                //dlgMessageBox(p.name); // works!
+                dlgMessageBox(p.name); // works! -- now for all prefixes
                 
             }
         }
