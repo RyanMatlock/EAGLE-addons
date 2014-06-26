@@ -1,12 +1,6 @@
 char CONNECTOR_REF_DES = 'J'; // connector reference designator
 
-if(!schematic)
-{
-    dlgMessageBox("This script can only be executed if the schematic editor is"
-                  " open.");
-    exit(1);
-}
-else
+if(schematic)
 {
     schematic(s)
     {
@@ -14,19 +8,20 @@ else
         output("testing.log")
         s.parts(p)
         {
-            p.instances(i)
+            //printf(p.name + "\n"); // works!
+            if(strchr(p.name, CONNECTOR_REF_DES) == 0)
             {
-                /* Only match if name starts with connector reference
-                   designator.  It will catch jumpers (JP) and probably some
-                   other stuff, too, but we'll have an ignore checkbox */
-                printf("Hello, world!\n");
-                /* if(strchr(i.symbol.name, CONNECTOR_REF_DES)) */
-                /* { */
-                /*     dlgMessageBox(i.symbol.name ": " i.value); */
-                /* } */
+                //dlgMessageBox(p.name); // works!
+                
             }
         }
     }
     dlgMessageBox("Script ran successfully!");
     exit(0);
+}
+else
+{
+    dlgMessageBox("This script can only be executed if the schematic editor is"
+                  " open.");
+    exit(0);    
 }
