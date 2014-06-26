@@ -72,6 +72,48 @@ string get_prefix(string name)
 }
     
 
+// use this later
+// this won't work yet by a long shot
+/* dlgDialog("Connector Attribute Editor") */
+/* { */
+/*     dlgVBoxLayout */
+/*     { */
+/*         for(int i = 0; i < NUM_OF_CONNECTORS; i++) */
+/*         { */
+/*             dlgHBoxLayout */
+/*             { */
+/*                 dlgLabel(NAME); */
+/*                 dlgVBoxLayout */
+/*                 { */
+/*                     for(int j = 0; i < NUM_OF_PINS; j++) */
+/*                     { */
+/*                         dlgLabel("Pin %i" % j); */
+/*                         dlgStringEdit(pin_j_text); */
+/*                     } */
+/*                 } */
+/*             } */
+/*         } */
+/*         dlgHBoxLayout */
+/*         { */
+/*             /\* if you have to go through connector by connector, you may have */
+/*                to do */
+/*                    dlgPushButton("+&Next") { next(); } */
+/*                and */
+/*                    dlgPushButton("-&Prev") { prev(); } */
+/*                to scroll through the connectors, and on the last one have the */
+/*                OK/Cancel thing. *\/ */
+/*             dlgPushButton("+&OK") */
+/*             { */
+/*                 dlgAccept(); */
+/*             } */
+/*             dlgPushButton("-&Cancel") */
+/*             { */
+/*                 dlgReject(); */
+/*             } */
+/*         } */
+/*     } */
+/* }; */
+
 if(schematic)
 {
     schematic(s)
