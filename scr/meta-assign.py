@@ -45,9 +45,11 @@ board_S_hide = [("F7", "Display -tNames -bNames;"),
 board__misc = [("F7", "Ratsnest"),
                ("F8", "Route"),
                ("F9", "Ripup @;"),
-               ("F10", "Via 'GND'"),
+               ("F10", "Via"),
                ("F11", "Pinswap"),
                ("F12", "DRC;")]
+
+schematic__misc = [("F12", "ERC;")]
                
 
 foo_FU_whatever = [("BS", "backspace 20;")]
