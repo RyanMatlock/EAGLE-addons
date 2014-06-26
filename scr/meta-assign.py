@@ -75,7 +75,7 @@ for var in local_vars:
             for modifier in modifiers:
                 assign += modifier + "+"
         for pair in eval(var):
-            eval(target).append(assign + pair[0] + " " + pair[1])
+            eval(target).append(assign + pair[0] + " '" + pair[1] + "'")
 
 schematic += common
 board += common
