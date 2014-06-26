@@ -1,3 +1,15 @@
+#usage "<h4>Connector Attributes v0.1 (2014-06-26)</h4>"
+       "<br>"
+       "<p>This ULP allows you to quickly and efficiently edit groups of "
+       "connectors (assumed to start with the reference designator J) in "
+       "order to take advantage of connector libraries that label pins on "
+       "connectors with \"&gt;<i>i</i>\" where <i>i</i> is the connector "
+       "number.  An example of such a library is magzor-connectors.lbr.</p>"
+       "<p>This program is provided as-is, without any warranty.</p>"
+       "<br>"
+       "<p><author>Author: Ryan Matlock (ryan.matlock<ignore>@gmail.com)"
+       "</author></p>"
+
 string CONNECTOR_REF_DES = "J"; // connector reference designator
 
 
