@@ -102,6 +102,8 @@ def is_grey(rgb):
 
 def main():
     colors = []
+    group = [] # I need things packaged into groups of 8
+    group_size = 8
     start = 60
     stop = 256
     step = int((256-start)/2.3)
@@ -109,19 +111,31 @@ def main():
         for g in range(start, stop, step):
             for b in range(start, stop, step):
                 c = (r, g, b)
-                if is_grey(c):
-                    pass
+                if len(group) < group_size:
+                    if not is_grey(c):
+                        group.append(c)
                 else:
-                    colors.append(rgb_to_hex(c, prefix="#"))
-                    colors.append(rgb_to_hex(brighten(c, 30), prefix="#"))
+                    for element in group:
+                        colors.append(rgb_to_hex(element, prefix=""))
+                    # do the brightened colors next
+                    for element in group:
+                        colors.append(rgb_to_hex(brighten(element, 30),
+                                      prefix=""))
+                    # you still got a color, c, in this pass through, so
+                    # initialize the new group with it
+                    group = [c]
+                    # colors.append(rgb_to_hex(c, prefix="#"))
+                    # colors.append(rgb_to_hex(brighten(c, 30), prefix="#"))
     # print(colors)
-    with open("sm_color_palette.txt", "w") as f:
-        for (i, color) in enumerate(colors):
-            f.write("color-{},{},{}\n"
-                    "".format(i,
-                              color,
-                              color))
+    with open("../palette.txt", "w") as f:
+        # for (i, color) in enumerate(colors):
+        #     f.write("color-{},{},{}\n"
+        #             "".format(i,
+        #                       color,
+        #                       color))
+        for color in colors:
+            f.write("{}\n".format(color))
 
-
+            
 if __name__ == "__main__":
     main()

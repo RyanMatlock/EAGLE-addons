@@ -35,4 +35,6 @@ with open("palette.txt") as p:
 with open("set-palette.scr", "w") as sp:
     sp.write(header)
     for (i, color) in enumerate(colors):
-        sp.write("SET PALETTE {} {};\n".format(i + OFFSET, color))
+        # the "... C8{} ..." sets an alpha layer transparency of C8, which is
+        # apparently pretty standard
+        sp.write("SET PALETTE {} 0xC8{};\n".format(i + OFFSET, color))

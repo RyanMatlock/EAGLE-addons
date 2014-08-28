@@ -7,4 +7,4 @@ with open("sm_color_palette.txt") as f:
         for line in f:
             m = hex_p.match(line.strip().split(",")[2])
             if m is not None:
-                out.write("0x{}\n".format(m.group(1).upper()))
+                out.write("{}\n".format(m.group(1).upper()))
