@@ -1,0 +1,74 @@
+# colors:
+# 0 Black
+# 1 Blue
+# 2 Green
+# 3 Cyan
+# 4 Red
+# 5 Magenta
+# 6 Brown
+# 7 LGray
+# 8 DGray
+# 9 LBlue
+# 10 LGreen
+# 11 LCyan
+# 12 LRed
+# 13 LMagenta
+# 14 Yellow
+# 15 White
+###
+# fill styles:
+# 0 Empty
+# 1 Solid
+# 2 Line
+# 3 LtSlash
+# 4 Slash
+# 5 BkSlash
+# 6 LtBkSlash
+# 7 Hatch
+# 8 XHatch
+# 9 Interleave
+# 10 WideDot
+# 11 CloseDot
+# 12 Stipple1
+# 13 Stipple2
+# 14 Stipple3
+# 15 Stipple4
+###
+#layer_num,name,color_num,fill_style,display_boolean
+1,Top,4,Solid,True
+16,Bottom,1,Solid,True
+17,Pads,2,Solid,True
+18,Vias,2,Solid,True
+19,Unrouted,6,Solid,True
+20,Dimension,15,Solid,True
+21,tPlace,7,Solid,True
+22,bPlace,7,Solid,True
+23,tOrigins,15,Solid,True
+24,bOrigins,15,Solid,True
+25,tNames,7,Solid,True
+26,bNames,7,Solid,True
+27,tValues,7,Solid,True
+28,bValues,7,Solid,True
+29,tStop,7,LtSlash,False
+30,bStop,7,LtBkSlash,False
+31,tCream,7,Slash,False
+32,bCream,7,BkSlash,False
+33,tFinish,6,LtSlash,False
+34,bFinish,6,LtBkSlash,False
+35,tGlue,7,Slash,False
+36,bGlue,7,BkSlash,False
+37,tTest,7,Solid,False
+38,bTest,7,Solid,False
+39,tKeepout,4,CloseDot,True
+40,bKeepout,1,CloseDot,True
+41,tRestrict,4,WideDot,True
+42,bRestrict,1,WideDot,True
+43,vRestrict,2,WideDot,True
+44,Drills,7,Solid,True
+45,Holes,7,Solid,False
+46,Milling,3,Solid,False
+47,Measures,7,Solid,False
+48,Document,7,Solid,False
+49,Reference,7,Solid,False
+51,tDocu,7,Solid,True
+52,bDocu,7,Solid,True

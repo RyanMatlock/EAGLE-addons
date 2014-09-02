@@ -1,0 +1,69 @@
+# set-board-layer-colorss.scr
+# Use this for setting the layer colors and fills  for boards and library 
+# packages.
+# 
+# Ryan Matlock
+# 2014-08-28
+
+DISPLAY NONE;
+
+# although it's more concise to address the layers by name, doing it by number
+# prevents any issues related to their being renamed
+# Top: 1
+SET COLOR_LAYER 1 4;
+SET FILL_LAYER 1 Solid;
+
+# Bottom: 16
+SET COLOR_LAYER 16 9;
+SET FILL_LAYER 16 Solid;
+
+# Pads, Vias: 17, 18
+SET COLOR_LAYER 17 2;
+SET FILL_LAYER 17 Solid;
+SET COLOR_LAYER 18 2;
+SET FILL_LAYER 18 Solid;
+
+# Unrouted: 19
+SET COLOR_LAYER 19 6;
+SET FILL_LAYER 19 Solid;
+
+# Dimension: 20
+SET COLOR_LAYER 20 15;
+
+# tPlace, bPlace: 21, 22
+SET COLOR_LAYER 21 7;
+SET COLOR_LAYER 22 7;
+
+# tOrigins, bOrigins: 23, 24
+SET COLOR_LAYER 23 15;
+SET COLOR_LAYER 24 15;
+
+# tNames, bNames: 25, 26
+SET COLOR_LAYER 25 7;
+SET COLOR_LAYER 26 7;
+
+# tValues, bValues: 27, 28
+SET COLOR_LAYER 27 7;
+SET COLOR_LAYER 28 7;
+
+
+
+
+# LAYER 103 Enclosure;
+SET COLOR_LAYER 103 6;
+
+# LAYER 105 Fittings;
+SET COLOR_LAYER 105 3;
+
+# LAYER 106 Function;
+SET COLOR_LAYER 106 5;
+
+# LAYER 107 Pin;
+SET COLOR_LAYER 107 4;
+
+# set layer mounting hole grid/stencil layers
+# LAYER 108 MountingGrid;
+SET COLOR_LAYER 108 16;
+
+# LAYER 109 StencilDocu;
+SET COLOR_LAYER 109 20;
