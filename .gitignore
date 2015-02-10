@@ -10,3 +10,6 @@
 /lbr/
 # these are specific to local projects
 /lbr-generated/
+
+# these are separate repos I've downloaded
+/third-party/
