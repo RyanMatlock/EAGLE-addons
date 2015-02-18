@@ -7,6 +7,10 @@ keeping). Just point this at an EAGLE project folder and you're good to go. (It
 takes inspiration from my earlier script---zipboard.py--- for Magzor that
 checked for naming compliance and a bunch of other things, but I don't need all
 of that these days.)
+
+TODOs:
+- [ ] use textwrap module for pretty output
+- [ ] add more logging info
 """
 
 import re
@@ -104,9 +108,27 @@ def remove_cam_dir(base_dir):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("base_dir")
+    parser.add_argument("-d", "--dir",
+                        help="enter the directory on which you want to "
+                        "operate")
+    parser.add_argument("-C", "--rmcam",
+                        help="remove existing CAM directory",
+                        action="store_true")
     args = parser.parse_args()
-    print("base_dir: '{}'".format(args.base_dir))
+
+    if args.dir is not None:
+        base_dir = args.dir
+    else:
+        base_dir_input = input("Enter directory on which you want to operate "
+                               "or leave blank to use the current directory: ")
+        if base_dir_input:
+            base_dir = base_dir_input
+        else:
+            base_dir = os.getcwd()
+    if args.rmcam is not None:
+        remove_exiting_cam_dir = args.rmcam
+    
+    print("base_dir: '{}'".format(args.dir))
     return 0
 
 
