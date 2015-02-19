@@ -134,18 +134,25 @@ def main():
             base_dir = os.getcwd()
     base_dir = os.path.expanduser(base_dir)
 
+    # ensure that it's actually an EAGLE project folder
     if not is_eagle_project_folder(base_dir):
         logging.warning("'{}' does not contained file named '{}'"
                         "".format(base_dir, EAGLE_PROJECT_FOLDER_FILE))
+        if input("'{}' not found. Do you wish to proceed? (y/n)? "
+                 "".format(EAGLE_PROJECT_FOLDER_FILE)).lower in ("y", "yes"):
+            pass
+        else:
+            logging.info("Exiting on user's request due to '{}' not being "
+                         "found".format(EAGLE_PROJECT_FOLDER_FILE))
+            return 1
 
     # do all the stuff related to removing existing CAM dirs
     if args.rmcam is not None:
         remove_exiting_cam_dir = args.rmcam
     else:
         if cam_dir_exists(base_dir):
-            remove_cam_dir_input = input("Remove existing subdirectory './{}'"
-                                         " (y/n)?  ".format(CAM_DIR))
-            if remove_cam_dir_input.lower() in ("y", "yes"):
+            if input("Remove existing subdirectory './{}' (y/n)? "
+                     "".format(CAM_DIR)).lower() in ("y", "yes"):
                 remove_exiting_cam_dir = True
             else:
                 remove_exiting_cam_dir = False
