@@ -112,6 +112,16 @@ def mkdir_if_nexists(dir):
     return
 
 
+def mkdir_catch_oserror(dir):
+    try:
+        mkdir_if_nexists(dir)
+    except OSError as e:
+        logging.warning("Something weird happened when trying to make '{}' "
+                        "({})".format(dir, e))
+        return 1
+    return
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--dir",
@@ -174,8 +184,13 @@ def main():
     cam_path = os.path.join(base_dir, CAM_DIR)
     gerber_path = os.path.join(cam_path, GERBER_DIR)
 
-    mkdir_if_nexists(cam_path)
-    mkdir_if_nexists(gerber_path)
+    # mkdir_if_nexists(cam_path)
+    # mkdir_if_nexists(gerber_path)
+
+    if mkdir_catch_oserror(cam_path):
+        return 1
+    if mkdir_catch_oserror(gerber_path):
+        return 1
 
     # I'm pretty sure I can/should use context management here
     with zipfile.ZipFile(zipfile_name, "w") as zf:
