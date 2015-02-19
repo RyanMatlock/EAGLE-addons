@@ -101,9 +101,15 @@ def cam_dir_exists(base_dir):
 
 
 def remove_cam_dir(base_dir):
+    # I'm just going to be paranoid about removing stuff
     if cam_dir_exists(base_dir) and remove_exiting_cam_dir:
         shutil.rmtree(full_cam_dir(base_dir))
         logging.info("Removed '{}'".format(full_cam_dir(base_dir)))
+
+
+def is_eagle_project_folder(base_dir):
+    return os.path.isfile(os.path.join(os.path.expanduser(base_dir),
+                                       EAGLE_PROJECT_FOLDER_FILE))
 
 
 def main():
@@ -116,6 +122,7 @@ def main():
                         action="store_true")
     args = parser.parse_args()
 
+    # set the base directory
     if args.dir is not None:
         base_dir = args.dir
     else:
@@ -125,10 +132,28 @@ def main():
             base_dir = base_dir_input
         else:
             base_dir = os.getcwd()
+    base_dir = os.path.expanduser(base_dir)
+
+    if not is_eagle_project_folder(base_dir):
+        logging.warning("'{}' does not contained file named '{}'"
+                        "".format(base_dir, EAGLE_PROJECT_FOLDER_FILE))
+
+    # do all the stuff related to removing existing CAM dirs
     if args.rmcam is not None:
         remove_exiting_cam_dir = args.rmcam
+    else:
+        if cam_dir_exists(base_dir):
+            remove_cam_dir_input = input("Remove existing subdirectory './{}'"
+                                         " (y/n)?  ".format(CAM_DIR))
+            if remove_cam_dir_input.lower() in ("y", "yes"):
+                remove_exiting_cam_dir = True
+            else:
+                remove_exiting_cam_dir = False
+    remove_cam_dir(base_dir)
+
+    # now let's do the real stuff
+    base_name = os.path.basename(base_dir)
     
-    print("base_dir: '{}'".format(args.dir))
     return 0
 
 
