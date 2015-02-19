@@ -28,29 +28,31 @@ CRUFT_EXT = ["s#\d",  # schematic auto save files
              "b#\d",  # board auto save files
              ]
 
+remove_cruft = True
+
 # Gerber/Excellon file extensions for OSH Park and stencil making
-OSH_PARK_EXT = ["GBL",  # bottom layer
-                "GBO",  # bottom silkscreen
-                "GBS",  # bottom soldermask
-                "GKO",  # dimension
-                "GTL",  # top layer
-                "GTO",  # top silkscreen
-                "GTS",  # top soldermask
-                "XLN",  # Excellon drill file
-                ]
+GERBER_EXT = ["GBL",  # bottom layer
+              "GBO",  # bottom silkscreen
+              "GBS",  # bottom soldermask
+              "GKO",  # dimension
+              "GTL",  # top layer
+              "GTO",  # top silkscreen
+              "GTS",  # top soldermask
+              "XLN",  # Excellon drill file
+              ]
 
 # I've heard you don't really need these, but I see no reason to delete them
 MISC_CAM_EXT = ["dri",  # drill file verification
                 "gpi",  # Gerber file verification?
                 ]
 
-CAM_EXT = OSH_PARK_EXT + MISC_CAM_EXT
+CAM_EXT = GERBER_EXT + MISC_CAM_EXT
 
 CAM_DIR = "CAM"
 
 remove_exiting_cam_dir = False
 
-OSH_PARK_DIR = "OSH-Park"
+GERBER_DIR = "Gerbers"
 
 
 def has_ext(fname, ext):
@@ -80,16 +82,8 @@ def is_cam_file(fname):
     return has_ext_in_list(fname, CAM_EXT)
 
 
-def is_in_osh_zip(fname):
-    return has_ext_in_list(fname, OSH_PARK_EXT)
-
-
-def remove_cruft(fname):
-    if is_cruft(fname):
-        os.remove(fname)
-        return
-    else:
-        return
+def is_gerber_file(fname):
+    return has_ext_in_list(fname, GERBER_EXT)
 
 
 def full_cam_dir(base_dir):
@@ -112,6 +106,12 @@ def is_eagle_project_folder(base_dir):
                                        EAGLE_PROJECT_FOLDER_FILE))
 
 
+def mkdir_if_nexists(dir):
+    if not os.path.isdir(dir):
+        os.mkdir(dir)
+    return
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--dir",
@@ -119,6 +119,9 @@ def main():
                         "operate")
     parser.add_argument("-C", "--rmcam",
                         help="remove existing CAM directory",
+                        action="store_true")
+    parser.add_argument("-k", "--keepcruft",
+                        help="keep temporary save files and other cruft",
                         action="store_true")
     args = parser.parse_args()
 
@@ -156,11 +159,48 @@ def main():
                 remove_exiting_cam_dir = True
             else:
                 remove_exiting_cam_dir = False
-    remove_cam_dir(base_dir)
+    if remove_exiting_cam_dir:
+        remove_cam_dir(base_dir)
+
+    # keep cruft?
+    if args.keepcruft:
+        remove_cruft = False
 
     # now let's do the real stuff
     base_name = os.path.basename(base_dir)
-    
+    zipfile_name = base_name + "-gerbers.zip"
+    files_written_to_zipfile = []
+
+    cam_path = os.path.join(base_dir, CAM_DIR)
+    gerber_path = os.path.join(cam_path, GERBER_DIR)
+
+    mkdir_if_nexists(cam_path)
+    mkdir_if_nexists(gerber_path)
+
+    # I'm pretty sure I can/should use context management here
+    with zipfile.ZipFile(zipfile_name, "w") as zf:
+        for element in os.listdir(base_dir):
+            if is_cruft(element) and remove_cruft:
+                os.remove(element)
+                logging.info("Removed '{}'".format(element))
+            if is_gerber_file(element):
+                zf.write(element)
+                logging.info("Wrote '{}' to '{}'"
+                             "".format(element, zipfile_name))
+                files_written_to_zipfile.append(element)
+                shutil.move(os.path.join(base_dir, element), gerber_path)
+                logging.info("Moved '{}' to '{}'"
+                             "".format(element, gerber_path))
+            if is_cam_file(element) and os.path.isdir(cam_path):
+                shutil.move(os.path.join(base_dir, element), cam_path)
+                logging.info("Moved '{}' to '{}'"
+                             "".format(element, cam_path))
+
+    shutil.move(os.path.join(base_dir, zipfile_name), gerber_path)
+    logging.info("Moved '{}' to '{}'".format(zipfile_name, gerber_path))
+
+    print("Looks like everything worked as expected.")
+
     return 0
 
 
