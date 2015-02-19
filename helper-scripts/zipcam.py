@@ -78,8 +78,8 @@ def is_cruft(fname):
     return has_ext_in_list(fname, CRUFT_EXT)
 
 
-def is_cam_file(fname):
-    return has_ext_in_list(fname, CAM_EXT)
+def is_misc_cam_file(fname):
+    return has_ext_in_list(fname, MISC_CAM_EXT)
 
 
 def is_gerber_file(fname):
@@ -175,6 +175,8 @@ def main():
     # keep cruft?
     if args.keepcruft:
         remove_cruft = False
+    else:
+        remove_cruft = True
 
     # now let's do the real stuff
     base_name = os.path.basename(base_dir)
@@ -183,9 +185,6 @@ def main():
 
     cam_path = os.path.join(base_dir, CAM_DIR)
     gerber_path = os.path.join(cam_path, GERBER_DIR)
-
-    # mkdir_if_nexists(cam_path)
-    # mkdir_if_nexists(gerber_path)
 
     if mkdir_catch_oserror(cam_path):
         return 1
@@ -206,7 +205,7 @@ def main():
                 shutil.move(os.path.join(base_dir, element), gerber_path)
                 logging.info("Moved '{}' to '{}'"
                              "".format(element, gerber_path))
-            if is_cam_file(element) and os.path.isdir(cam_path):
+            if is_misc_cam_file(element) and os.path.isdir(cam_path):
                 shutil.move(os.path.join(base_dir, element), cam_path)
                 logging.info("Moved '{}' to '{}'"
                              "".format(element, cam_path))
